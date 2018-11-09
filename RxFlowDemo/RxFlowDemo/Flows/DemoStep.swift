@@ -29,4 +29,6 @@ enum DemoStep: Step {
     case settings
     case about
     case settingsIsComplete
+    
+    case logout
 }

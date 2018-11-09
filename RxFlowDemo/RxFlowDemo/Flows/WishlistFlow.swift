@@ -41,6 +41,8 @@ class WishlistFlow: Flow {
             return navigateToCastDetailScreen(with: castId)
         case .settings:
             return navigateToSettings()
+        case .logout:
+            return .end(withStepForParentFlow: DemoStep.logout)
         case .settingsIsComplete:
             self.rootViewController.presentedViewController?.dismiss(animated: true)
             return .none
@@ -59,6 +61,12 @@ class WishlistFlow: Flow {
                                                                 target: self.wishlistStepper,
                                                                 action: #selector(WishlistStepper.settings)),
                                                 animated: false)
+            
+            navigationBarItem.setLeftBarButton(UIBarButtonItem(title: "Logout",
+                                                               style: .plain,
+                                                               target: self.wishlistStepper,
+                                                               action: #selector(WishlistStepper.logout)),
+                                               animated: false)
         }
         return .one(flowItem: NextFlowItem(nextPresentable: viewController,
                                            nextStepper: viewController.viewModel))
@@ -103,5 +111,9 @@ class WishlistStepper: Stepper, HasDisposeBag {
 
     @objc func settings() {
         self.step.accept(DemoStep.settings)
+    }
+    
+    @objc func logout() {
+        self.step.accept(DemoStep.logout)
     }
 }
